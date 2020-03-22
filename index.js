@@ -40,7 +40,6 @@ function makeClient(clientId) {
       connected = false;
     }
 
-    rpc.on('error', (e) => instance.emit('error', e));
 
     reconnect() {
         rpc = new Discord.Client({ transport: browser ? 'websocket' : 'ipc' });
@@ -69,6 +68,8 @@ function makeClient(clientId) {
         }
     }
   }();
+
+  rpc.on('error', (e) => instance.emit('error', e));
 
   rpc.login({ clientId })
     .then(() => {
